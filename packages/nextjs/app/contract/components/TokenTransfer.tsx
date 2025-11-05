@@ -4,7 +4,7 @@ import { useState } from "react";
 import { isAddress, parseEther } from "viem";
 import {
   useAccount,
-  usePublicClient,
+  useClient,
   useReadContract,
   useWaitForTransactionReceipt,
   useWriteContract,
@@ -26,7 +26,7 @@ export function TokenTransfer() {
   const [isMinting, setIsMinting] = useState(false);
   const [mintAmount, setMintAmount] = useState("");
   const [mintRecipient, setMintRecipient] = useState("");
-  const publicClient = usePublicClient({ chainId: mainnet.id });
+  const mainnetClient = useClient({ chainId: mainnet.id });
 
   const {
     writeContract: transfer,
@@ -67,9 +67,9 @@ export function TokenTransfer() {
   const handleTransfer = async () => {
     let resolvedRecipient = recipient;
 
-    if (hasENSShape(recipient) && publicClient) {
+    if (hasENSShape(recipient) && mainnetClient) {
       try {
-        const ensAddress = await getEnsAddress(publicClient, {
+        const ensAddress = await getEnsAddress(mainnetClient, {
           name: normalize(recipient),
         });
         if (ensAddress) {
