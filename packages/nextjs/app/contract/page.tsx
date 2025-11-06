@@ -1,3 +1,4 @@
+import { ENSProfile } from "./components/ENSProfile";
 import { TokenBalance } from "./components/TokenBalance";
 import { TokenOwnership } from "./components/TokenOwnership";
 import { TokenTransfer } from "./components/TokenTransfer";
@@ -80,8 +81,9 @@ export default function ContractPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-8 md:px-12 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            {/* Token Balance */}
-            <div>
+            {/* ENS Profile & Token Balance */}
+            <div className="space-y-6">
+              <ENSProfile />
               <TokenBalance />
             </div>
 

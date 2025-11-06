@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { isAddress, parseEther, createPublicClient, http } from "viem";
+import { isAddress, parseEther } from "viem";
 import {
   useAccount,
   useReadContract,
@@ -11,19 +11,12 @@ import {
 import buenaTokenAbi from "../../../../../artifacts/BuenaToken.json";
 import { normalize } from "viem/ens";
 import { getEnsAddress } from "viem/actions";
-import { mainnet } from "viem/chains";
+import { mainnetEnsClient } from "../../lib/ensClient";
 
 const CONTRACT_ADDRESS = process.env
   .NEXT_PUBLIC_BUENA_TOKEN_ADDRESS as `0x${string}`;
 
 const hasENSShape = (input: string) => input.includes(".") && input.length > 2;
-
-// Create a standalone viem public client for mainnet ENS resolution
-// This doesn't require mainnet to be in the wagmi config
-const mainnetClient = createPublicClient({
-  chain: mainnet,
-  transport: http(),
-});
 
 export function TokenTransfer() {
   const { address, isConnected } = useAccount();
@@ -74,7 +67,7 @@ export function TokenTransfer() {
 
     if (hasENSShape(recipient)) {
       try {
-        const ensAddress = await getEnsAddress(mainnetClient, {
+        const ensAddress = await getEnsAddress(mainnetEnsClient, {
           name: normalize(recipient),
         });
         if (ensAddress) {
