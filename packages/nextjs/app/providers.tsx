@@ -9,45 +9,6 @@ import {
 } from "@tanstack/react-query";
 import { defineChain } from "viem";
 import { WagmiProvider } from "wagmi";
-import {
-  arbitrum,
-  base,
-  celo as celoMainnet,
-  mainnet,
-  optimism,
-  polygon,
-  sepolia,
-} from "wagmi/chains";
-
-// Override Celo mainnet with icon
-const celo = {
-  ...celoMainnet,
-  iconUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/5567.png",
-};
-
-// Define Celo Alfajores testnet
-const celoAlfajores = defineChain({
-  id: 44787,
-  name: "Celo Alfajores Testnet",
-  nativeCurrency: {
-    name: "CELO",
-    symbol: "CELO",
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://alfajores-forno.celo-testnet.org"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Blockscout",
-      url: "https://celo-alfajores.blockscout.com",
-    },
-  },
-  iconUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/5567.png",
-  testnet: true,
-});
 
 // Define Celo Sepolia testnet
 const celoSepolia = defineChain({
@@ -77,17 +38,7 @@ const config = getDefaultConfig({
   appName: "ZeroToDapp",
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
-  chains: [
-    mainnet,
-    sepolia,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    celo,
-    celoAlfajores,
-    celoSepolia,
-  ],
+  chains: [celoSepolia],
   ssr: true,
 });
 

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { isAddress, parseEther } from "viem";
+import { isAddress, parseEther, createPublicClient, http } from "viem";
 import {
   useAccount,
-  useClient,
   useReadContract,
   useWaitForTransactionReceipt,
   useWriteContract,
@@ -19,6 +18,13 @@ const CONTRACT_ADDRESS = process.env
 
 const hasENSShape = (input: string) => input.includes(".") && input.length > 2;
 
+// Create a standalone viem public client for mainnet ENS resolution
+// This doesn't require mainnet to be in the wagmi config
+const mainnetClient = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+});
+
 export function TokenTransfer() {
   const { address, isConnected } = useAccount();
   const [recipient, setRecipient] = useState("");
@@ -26,7 +32,6 @@ export function TokenTransfer() {
   const [isMinting, setIsMinting] = useState(false);
   const [mintAmount, setMintAmount] = useState("");
   const [mintRecipient, setMintRecipient] = useState("");
-  const mainnetClient = useClient({ chainId: mainnet.id });
 
   const {
     writeContract: transfer,
@@ -67,7 +72,7 @@ export function TokenTransfer() {
   const handleTransfer = async () => {
     let resolvedRecipient = recipient;
 
-    if (hasENSShape(recipient) && mainnetClient) {
+    if (hasENSShape(recipient)) {
       try {
         const ensAddress = await getEnsAddress(mainnetClient, {
           name: normalize(recipient),
