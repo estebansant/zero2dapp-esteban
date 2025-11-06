@@ -1,14 +1,39 @@
 "use client";
 
 import { formatUnits } from "viem";
-import { useAccount, useReadContract } from "wagmi";
+import {
+  createConfig,
+  http,
+  useAccount,
+  useEnsName,
+  useReadContract,
+} from "wagmi";
+import { mainnet } from "wagmi/chains";
 import buenaTokenAbi from "../../../../../artifacts/BuenaToken.json";
 
 const CONTRACT_ADDRESS = process.env
   .NEXT_PUBLIC_BUENA_TOKEN_ADDRESS as `0x${string}`;
 
+const mainnetEnsConfig = createConfig({
+  chains: [mainnet],
+  transports: {
+    [mainnet.id]: http(),
+  },
+  ssr: true,
+});
+
 export function TokenBalance() {
   const { address, isConnected } = useAccount();
+  const { data: ensName } = useEnsName({
+    address,
+    chainId: mainnet.id,
+    config: mainnetEnsConfig,
+    query: {
+      enabled: !!address,
+    },
+  });
+
+  console.log("ensName", ensName);
 
   const balanceOfResult = useReadContract({
     address: CONTRACT_ADDRESS,
@@ -42,7 +67,7 @@ export function TokenBalance() {
 
   if (!isConnected) {
     return (
-      <div className="card bg-base-200 shadow-xl border border-base-300">
+      <div className="card bg-base-200 shadow-xl border border-base-300 mb-6">
         <div className="card-body space-y-4">
           <h2 className="card-title text-2xl mb-4">💰 Token Balance</h2>
           <div className="alert alert-info">
@@ -67,7 +92,7 @@ export function TokenBalance() {
   }
 
   return (
-    <div className="card bg-base-200 shadow-xl border border-base-300">
+    <div className="card bg-base-200 shadow-xl border border-base-300 mb-6">
       <div className="card-body space-y-4">
         <h2 className="card-title text-2xl mb-4">💰 Token Balance</h2>
         {isLoading ? (
@@ -95,7 +120,9 @@ export function TokenBalance() {
               </div>
             </div>
             <div className="text-sm opacity-70 font-mono break-all">
-              Your Address: {address}
+              {ensName
+                ? `Your ENS Name ${ensName}`
+                : `Your Address: ${address}`}
             </div>
           </div>
         )}

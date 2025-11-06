@@ -182,7 +182,7 @@ export function TokenTransfer() {
               </label>
               <input
                 type="text"
-                placeholder="0x..."
+                placeholder="0x... or vitalik.eth"
                 className="input input-bordered w-full font-mono"
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
