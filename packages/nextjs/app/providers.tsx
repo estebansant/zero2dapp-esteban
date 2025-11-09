@@ -34,11 +34,34 @@ const celoSepolia = defineChain({
   testnet: true,
 });
 
+const celo = defineChain({
+  id: 42220,
+  name: "Celo",
+  nativeCurrency: {
+    name: "CELO",
+    symbol: "CELO",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://forno.celo.org"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Celoscan",
+      url: "https://celoscan.io",
+    },
+  },
+  iconUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/5567.png",
+  testnet: false,
+});
+
 const config = getDefaultConfig({
   appName: "ZeroToDapp",
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
-  chains: [celoSepolia],
+    chains: [celo, celoSepolia],
   ssr: true,
 });
 
