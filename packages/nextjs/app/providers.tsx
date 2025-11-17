@@ -7,38 +7,44 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { defineChain } from "viem";
 import { WagmiProvider } from "wagmi";
+import {
+  arbitrum,
+  base,
+  celoSepolia as celoSepoliaTestnet,
+  celo as celoMainnet,
+  mainnet,
+  optimism,
+  polygon,
+  sepolia,
+} from "wagmi/chains";
 
-// Define Celo Sepolia testnet
-const celoSepolia = defineChain({
-  id: 11142220,
-  name: "Celo Sepolia Testnet",
-  nativeCurrency: {
-    name: "CELO",
-    symbol: "CELO",
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://forno.celo-sepolia.celo-testnet.org"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Blockscout",
-      url: "https://celo-sepolia.blockscout.com",
-    },
-  },
+// Override Celo mainnet with icon
+const celo = {
+  ...celoMainnet,
   iconUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/5567.png",
-  testnet: true,
-});
+};
 
-const config = getDefaultConfig({
+// Override Celo Sepolia Testnet with icon
+const celoSepolia = {
+  ...celoSepoliaTestnet,
+  iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
+};
+
+const wagmiConfig = getDefaultConfig({
   appName: "ZeroToDapp",
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
-  chains: [celoSepolia],
+  chains: [
+    mainnet,
+    sepolia,
+    polygon,
+    optimism,
+    arbitrum,
+    base,
+    celo,
+    celoSepolia,
+  ],
   ssr: true,
 });
 
@@ -47,8 +53,6 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        // With SSR, we usually want to set some default staleTime
-        // above 0 to avoid refetching immediately on the client
         staleTime: 60 * 1000, // 1 minute
       },
     },
@@ -59,13 +63,8 @@ let browserQueryClient: QueryClient | undefined = undefined;
 
 function getQueryClient() {
   if (isServer) {
-    // Server: always make a new query client
     return makeQueryClient();
   } else {
-    // Browser: make a new query client if we don't already have one
-    // This is very important, so we don't re-make a new client if React
-    // suspends during the initial render. This may not be needed if we
-    // have a suspense boundary BELOW the creation of the query client
     if (!browserQueryClient) browserQueryClient = makeQueryClient();
     return browserQueryClient;
   }
@@ -75,7 +74,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider initialChain={celoSepolia}>
           {children}
