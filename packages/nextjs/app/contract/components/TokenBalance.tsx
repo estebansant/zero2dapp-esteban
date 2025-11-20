@@ -34,24 +34,17 @@ export function TokenBalance() {
 
   if (!isConnected) {
     return (
-      <div className="card bg-base-200 shadow-xl border border-base-300">
-        <div className="card-body">
-          <h2 className="card-title text-2xl mb-4">💰 Token Balance</h2>
-          <div className="alert alert-info">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="stroke-current shrink-0 w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>Please connect your wallet to view your token balance</span>
+      <div className="flex flex-col h-full">
+        <div className="card bg-celo-dk-tan border-2 border-celo-outline flex-1 flex flex-col">
+          <div className="card-body p-8 flex flex-col justify-between">
+            <h3 className="font-inter text-2xl font-bold tracking-tight mb-6">
+              TOKEN BALANCE
+            </h3>
+            <div className="alert alert-info p-6">
+              <span className="font-inter text-body-m">
+                Please connect your wallet to view your token balance
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -59,39 +52,51 @@ export function TokenBalance() {
   }
 
   return (
-    <div className="card bg-base-200 shadow-xl border border-base-300">
-      <div className="card-body">
-        <h2 className="card-title text-2xl mb-4">💰 Token Balance</h2>
-        {isLoading ? (
-          <div className="flex justify-center py-8">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div className="stat bg-base-300 rounded-lg p-6">
-              <div className="stat-title">
-                {(tokenName as string) || "BuenoToken"}
+    <div className="flex flex-col h-full">
+      <div className="card bg-celo-dk-tan border-2 border-celo-outline flex-1 flex flex-col">
+        <div className="card-body p-8 flex flex-col justify-between">
+          <h3 className="font-inter text-2xl font-bold tracking-tight mb-6">
+            TOKEN BALANCE
+          </h3>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-16">
+              <span className="loading loading-spinner loading-lg text-celo-purple"></span>
+            </div>
+          ) : (
+            <div className="flex flex-col space-y-8">
+              {/* Large Balance Display */}
+              <div className="bg-celo-yellow border-2 border-celo-black p-8">
+                <div className="flex flex-col">
+                  <p className="font-inter text-label uppercase mb-2">
+                    {(tokenName as string) || "BuenoToken"}
+                  </p>
+                  <p className="font-alpina text-6xl text-celo-black leading-tight">
+                    {balance
+                      ? parseFloat(formatEther(balance as bigint)).toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 4,
+                          }
+                        )
+                      : "0.00"}
+                  </p>
+                  <p className="font-inter text-body-m mt-2">
+                    {(tokenSymbol as string) || "BTK"}
+                  </p>
+                </div>
               </div>
-              <div className="stat-value text-primary text-4xl">
-                {balance
-                  ? parseFloat(formatEther(balance as bigint)).toLocaleString(
-                      undefined,
-                      {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 4,
-                      }
-                    )
-                  : "0.00"}
-              </div>
-              <div className="stat-desc">
-                {(tokenSymbol as string) || "BTK"}
+
+              {/* Address Display */}
+              <div className="bg-celo-lt-tan border-2 border-celo-outline p-6">
+                <p className="font-inter text-label uppercase mb-2">YOUR ADDRESS</p>
+                <p className="font-mono text-body-s text-celo-body-copy break-all">
+                  {address}
+                </p>
               </div>
             </div>
-            <div className="text-sm opacity-70 font-mono break-all">
-              Your Address: {address}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

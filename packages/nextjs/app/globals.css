@@ -1,3 +1,6 @@
+/* Import fonts FIRST - before @tailwind directives */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@250;400;750&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,41 +20,186 @@ html,
 body {
   width: 100%;
   overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
   height: 100%;
+  background-color: #FBF6F1;
+  color: #000000;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'GT Alpina', serif;
+  font-weight: 250;
+  letter-spacing: -0.01em;
 }
 
-/* Celo Theme Variables */
+h1 {
+  font-size: 72px;
+  line-height: 84px;
+}
+
+h2 {
+  font-size: 54px;
+  line-height: 72px;
+}
+
+h3 {
+  font-size: 48px;
+  line-height: 48px;
+}
+
+h4 {
+  font-size: 40px;
+  line-height: 40px;
+}
+
+/* Celo Brand Color Variables */
 :root {
-  --celo-yellow: #fcff52;
+  /* Primary */
+  --celo-yellow: #FCFF52;
+  --celo-forest-green: #4E632A;
+  
+  /* Base */
+  --celo-lt-tan: #FBF6F1;
+  --celo-dk-tan: #E6E3D5;
+  --celo-brown: #635949;
+  --celo-purple: #1A0329;
+  
+  /* Functional */
   --celo-black: #000000;
-  --celo-gold: #fbcc5c;
-  --celo-green: #35d07f;
-  --celo-blue: #5ea33b;
+  --celo-white: #FFFFFF;
+  --celo-inactive: #9B9B9B;
+  --celo-body-copy: #666666;
+  
+  /* Feedback */
+  --celo-success: #329F3B;
+  --celo-error: #E70532;
+  
+  /* Accent Pops */
+  --celo-lt-blue: #8AC0F9;
+  --celo-orange: #F29E5F;
+  --celo-pink: #F2A9E7;
+  --celo-lime: #B2EBA1;
+  
+  /* Outline */
+  --celo-outline: #CCCCCC;
+  --celo-outline-alt: #483554;
 }
 
-[data-theme="celo"],
-[data-theme="celo-dark"] {
-  --p: 252 255 82; /* Celo Yellow */
-  --s: 0 0 0; /* Black */
-  --a: 251 204 92; /* Celo Gold */
-  --n: 26 26 26;
-  --b1: 255 255 255; /* Base white */
-  --b2: 245 245 245;
-  --b3: 229 229 229;
+/* DaisyUI Theme Override */
+[data-theme="celo"] {
+  --p: 252 255 82; /* Yellow */
+  --s: 78 99 42; /* Forest Green */
+  --a: 242 169 231; /* Pink */
+  --n: 26 3 41; /* Purple */
+  --b1: 251 246 241; /* Lt Tan */
+  --b2: 230 227 213; /* Dk Tan */
+  --b3: 99 89 73; /* Brown */
+  --bc: 0 0 0; /* Black text */
+  --pc: 0 0 0; /* Primary content (black on yellow) */
+  --sc: 255 255 255; /* Secondary content (white on green) */
 }
 
 [data-theme="celo-dark"] {
-  --b1: 0 0 0; /* Black base */
-  --b2: 26 26 26;
-  --b3: 42 42 42;
-  --s: 255 255 255; /* White secondary for dark */
+  --p: 252 255 82; /* Yellow */
+  --s: 78 99 42; /* Forest Green */
+  --a: 242 169 231; /* Pink */
+  --n: 26 3 41; /* Purple */
+  --b1: 26 3 41; /* Purple base */
+  --b2: 78 99 42; /* Forest Green */
+  --b3: 99 89 73; /* Brown */
+  --bc: 255 255 255; /* White text */
+  --pc: 0 0 0; /* Primary content (black on yellow) */
+  --sc: 255 255 255; /* Secondary content (white on green) */
+}
+
+/* Hard-edged components - no rounded corners */
+.card,
+.btn,
+.input,
+.alert,
+.badge {
+  border-radius: 0 !important;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Button styles - hard inversion on hover */
+.btn {
+  font-weight: 750;
+  letter-spacing: 0em;
+  border: 2px solid;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--celo-yellow);
+  color: var(--celo-black);
+  border-color: var(--celo-black);
+}
+
+.btn-primary:hover {
+  background-color: var(--celo-black);
+  color: var(--celo-yellow);
+  border-color: var(--celo-yellow);
+}
+
+.btn-secondary {
+  background-color: var(--celo-purple);
+  color: var(--celo-white);
+  border-color: var(--celo-purple);
+}
+
+.btn-secondary:hover {
+  background-color: var(--celo-white);
+  color: var(--celo-purple);
+  border-color: var(--celo-purple);
+}
+
+/* Input styles - stark outlines */
+.input {
+  border: 2px solid var(--celo-outline);
+  font-weight: 250;
+}
+
+.input:focus {
+  outline: 2px solid var(--celo-black);
+  border-color: var(--celo-black);
+}
+
+/* Card styles - hard edges with visible outlines */
+.card {
+  border: 2px solid var(--celo-outline);
+  box-shadow: none !important;
+}
+
+/* Alert styles - stark blocks */
+.alert {
+  border: 2px solid;
+}
+
+.alert-info {
+  background-color: var(--celo-lt-blue);
+  color: var(--celo-black);
+  border-color: var(--celo-black);
+}
+
+.alert-success {
+  background-color: var(--celo-success);
+  color: var(--celo-white);
+  border-color: var(--celo-black);
+}
+
+.alert-error {
+  background-color: var(--celo-error);
+  color: var(--celo-white);
+  border-color: var(--celo-black);
+}
+
+.alert-warning {
+  background-color: var(--celo-orange);
+  color: var(--celo-black);
+  border-color: var(--celo-black);
 }
