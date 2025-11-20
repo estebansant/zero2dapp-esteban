@@ -22,7 +22,6 @@ export function TokenTransfer() {
   const { address, isConnected } = useAccount();
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
-  const [isMinting, setIsMinting] = useState(false);
   const [mintAmount, setMintAmount] = useState("");
   const [mintRecipient, setMintRecipient] = useState("");
 
@@ -50,7 +49,6 @@ export function TokenTransfer() {
       hash: mintHash,
     });
 
-  // Check if user is owner
   const { data: owner } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: buenoTokenAbi.abi as any,
@@ -168,7 +166,7 @@ export function TokenTransfer() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col h-full space-y-8">
       {/* Transfer Tokens */}
       <div className="card bg-base-200 shadow-xl border border-base-300">
         <div className="card-body space-y-4">
@@ -190,23 +188,25 @@ export function TokenTransfer() {
               />
             </div>
             <div className="form-control">
-              <label className="label">
-                <span className="label-text">Amount</span>
+              <label className="label pb-2">
+                <span className="label-text font-inter text-label uppercase">
+                  Amount
+                </span>
               </label>
               <input
                 type="number"
                 step="0.0001"
                 placeholder="0.0"
-                className="input input-bordered w-full"
+                className="input border-2 border-celo-outline bg-celo-lt-tan w-full text-body-m p-4"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 disabled={isTransferPending || isTransferConfirming}
               />
             </div>
             {(isTransferPending || isTransferConfirming) && (
-              <div className="alert alert-info">
+              <div className="alert alert-info p-6">
                 <span className="loading loading-spinner loading-sm"></span>
-                <span>
+                <span className="font-inter text-body-m">
                   {isTransferConfirming
                     ? "Waiting for confirmation..."
                     : "Transaction submitted..."}
@@ -214,30 +214,21 @@ export function TokenTransfer() {
               </div>
             )}
             {isTransferSuccess && (
-              <div className="alert alert-success">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-current shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span>Transfer successful!</span>
+              <div className="alert alert-success p-6">
+                <span className="font-inter text-body-m font-bold">
+                  Transfer successful!
+                </span>
               </div>
             )}
             {transferError && (
-              <div className="alert alert-error">
-                <span>Error: {transferError.message}</span>
+              <div className="alert alert-error p-6">
+                <span className="font-inter text-body-s">
+                  Error: {transferError.message}
+                </span>
               </div>
             )}
             <button
-              className="btn btn-primary w-full"
+              className="btn btn-primary w-full py-4 mt-4"
               onClick={handleTransfer}
               disabled={
                 isTransferPending ||
@@ -246,7 +237,7 @@ export function TokenTransfer() {
                 !amount
               }
             >
-              Send Tokens
+              SEND TOKENS
             </button>
           </div>
         </div>
@@ -262,36 +253,40 @@ export function TokenTransfer() {
             </h2>
             <div className="space-y-4">
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Recipient Address</span>
+                <label className="label pb-2">
+                  <span className="label-text font-inter text-label uppercase text-celo-white">
+                    Recipient Address
+                  </span>
                 </label>
                 <input
                   type="text"
                   placeholder="0x..."
-                  className="input input-bordered w-full font-mono"
+                  className="input border-2 border-celo-outline bg-celo-lt-tan w-full font-mono text-body-m p-4"
                   value={mintRecipient}
                   onChange={(e) => setMintRecipient(e.target.value)}
                   disabled={isMintPending || isMintConfirming}
                 />
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Amount</span>
+                <label className="label pb-2">
+                  <span className="label-text font-inter text-label uppercase text-celo-white">
+                    Amount
+                  </span>
                 </label>
                 <input
                   type="number"
                   step="0.0001"
                   placeholder="0.0"
-                  className="input input-bordered w-full"
+                  className="input border-2 border-celo-outline bg-celo-lt-tan w-full text-body-m p-4"
                   value={mintAmount}
                   onChange={(e) => setMintAmount(e.target.value)}
                   disabled={isMintPending || isMintConfirming}
                 />
               </div>
               {(isMintPending || isMintConfirming) && (
-                <div className="alert alert-info">
+                <div className="alert alert-info p-6">
                   <span className="loading loading-spinner loading-sm"></span>
-                  <span>
+                  <span className="font-inter text-body-m">
                     {isMintConfirming
                       ? "Waiting for confirmation..."
                       : "Transaction submitted..."}
@@ -299,30 +294,21 @@ export function TokenTransfer() {
                 </div>
               )}
               {isMintSuccess && (
-                <div className="alert alert-success">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="stroke-current shrink-0 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span>Mint successful!</span>
+                <div className="alert alert-success p-6">
+                  <span className="font-inter text-body-m font-bold">
+                    Mint successful!
+                  </span>
                 </div>
               )}
               {mintError && (
-                <div className="alert alert-error">
-                  <span>Error: {mintError.message}</span>
+                <div className="alert alert-error p-6">
+                  <span className="font-inter text-body-s">
+                    Error: {mintError.message}
+                  </span>
                 </div>
               )}
               <button
-                className="btn btn-secondary w-full"
+                className="btn bg-celo-yellow hover:bg-celo-white text-celo-black border-2 border-celo-yellow w-full py-4 mt-4"
                 onClick={handleMint}
                 disabled={
                   isMintPending ||
@@ -331,7 +317,7 @@ export function TokenTransfer() {
                   !mintAmount
                 }
               >
-                Mint Tokens
+                MINT TOKENS
               </button>
             </div>
           </div>
