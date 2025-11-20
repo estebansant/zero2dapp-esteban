@@ -1,6 +1,7 @@
 # Zero to Dapp Devconnect Argentina
 
 This is the repo for Zero to Dapp, a workshop with seven sections:
+
 1. Remix
 2. The Graph(https://github.com/ryestew/zero2dapp/blob/self/THEGRAPH.md)
 3. [Celo](https://github.com/ryestew/zero2dapp/blob/self/CELO.md) 
