@@ -61,19 +61,16 @@ Visit [remix.ethereum.org](https://remix.ethereum.org/) in your browser.
 
 ### Step 2: Create Contract File
 
-1. In the File Explorer (left sidebar), click the "+" icon to create a new file
-2. Name it `BuenoToken.sol`
-3. Copy the contract code from `contracts/BuenoToken.sol` in your project
-4. Paste it into the Remix editor
+1. In the top right of Remix, click the GitHub connect to login
+2. Then click the caret next to that login to clone this repo.
+3. In the File Explorer, open the contracts folder and click on BuenoToken.sol to open it in the Editor.
 
 ### Step 3: Compile Contract
 
-1. Click on the "Solidity Compiler" tab (left sidebar, second icon)
-2. Select compiler version `0.8.27` or higher
-3. Click "Compile BuenoToken.sol" button
-4. Wait for compilation to complete
-5. Ensure there are no errors (warnings are okay)
-6. You should see a green checkmark when compilation succeeds
+1. Click the "Solidity" on the icon panel to open the Solidity compiler
+2. Click the Compile button.
+3. Ensure there are no errors (warnings are okay)
+4. You should see a green checkmark when compilation succeeds
 
 ### Step 4: Connect MetaMask
 
