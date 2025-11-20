@@ -234,11 +234,3 @@ After successful deployment:
 - [Celo Block Explorer](https://celo.blockscout.com/)
 - [Solidity Documentation](https://docs.soliditylang.org/)
 
-## 🆘 Getting Help
-
-If you encounter issues:
-
-- [Celo Discord](https://discord.gg/celo) - Active community support
-- [Celo Forum](https://forum.celo.org/) - Technical discussions
-- [Remix Gitter](https://gitter.im/ethereum/remix) - Remix-specific help
-
