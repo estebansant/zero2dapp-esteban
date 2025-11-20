@@ -19,20 +19,17 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 
-// Override Celo mainnet with icon
-const celo = {
-  ...celoMainnet,
-  iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
-};
+// Celo chain configurations
+const celo = celoMainnet;
 
-// Define Celo Alfajores testnet
 const celoAlfajores = defineChain({
   id: 44787,
   name: "Celo Alfajores Testnet",
+  network: "celo-alfajores",
   nativeCurrency: {
+    decimals: 18,
     name: "CELO",
     symbol: "CELO",
-    decimals: 18,
   },
   rpcUrls: {
     default: {
@@ -41,35 +38,33 @@ const celoAlfajores = defineChain({
   },
   blockExplorers: {
     default: {
-      name: "Blockscout",
-      url: "https://celo-alfajores.blockscout.com",
+      name: "CeloScan",
+      url: "https://alfajores.celoscan.io",
     },
   },
-  iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
   testnet: true,
 });
 
-// Define Celo Sepolia testnet
 const celoSepolia = defineChain({
-  id: 11142220,
-  name: "Celo Sepolia Testnet",
+  id: 84532,
+  name: "Celo Sepolia",
+  network: "celo-sepolia",
   nativeCurrency: {
+    decimals: 18,
     name: "CELO",
     symbol: "CELO",
-    decimals: 18,
   },
   rpcUrls: {
     default: {
-      http: ["https://forno.celo-sepolia.celo-testnet.org"],
+      http: ["https://sepolia-forno.celo-testnet.org"],
     },
   },
   blockExplorers: {
     default: {
-      name: "Blockscout",
-      url: "https://celo-sepolia.blockscout.com",
+      name: "CeloScan",
+      url: "https://sepolia.celoscan.io",
     },
   },
-  iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
   testnet: true,
 });
 
