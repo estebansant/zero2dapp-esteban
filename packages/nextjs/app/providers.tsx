@@ -3,14 +3,7 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
-import { defineChain } from "viem";
 import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  sepolia,
   celoSepolia as celoSepoliaTestnet,
   celo as celoMainnet,
 } from "wagmi/chains";
@@ -26,7 +19,7 @@ const celo = {
   iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
 };
 
-// Override Celo mainnet with icon
+// Override Celo Sepolia testnet with icon
 const celoSepolia = {
   ...celoSepoliaTestnet,
   iconUrl: "https://cryptologos.cc/logos/celo-celo-logo.svg?v=029",
@@ -37,12 +30,6 @@ const wagmiConfig = getDefaultConfig({
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID",
   chains: [
-    mainnet,
-    sepolia,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
     celo,
     celoSepolia,
   ],
